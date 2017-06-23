@@ -1,0 +1,11 @@
+<ul>
+  <% notes.order(:created_at).each do |note| %>
+    <li>
+      <%= note.body %>
+      - <%= note.user.email %>
+    </li>
+    <% if current_user == note.user %>
+      <%= button_to "Delete Note", note_url(note), method: :delete %>
+    <% end %>
+  <% end %>
+</ul>

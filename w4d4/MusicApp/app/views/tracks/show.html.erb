@@ -1,0 +1,15 @@
+<h1><%= @track.name %></h1>
+
+<h2>Lyrics</h2>
+<%= @track.lyrics %>
+
+<h3>Notes</h3>
+<%= render 'notes/note', notes: @track.notes %>
+
+<h4>Add a Note</h4>
+<%= render 'notes/form', track: @track %>
+
+<%= button_to "Create Track", new_track_url, method: :get %>
+<%= button_to "Edit Track", edit_track_url(@track), method: :get %>
+<%= button_to "Delete Track", track_url(@track), method: :delete %>
+<a href="<%= album_url(@track.album) %>">Back to <%= @track.album.name %></a>

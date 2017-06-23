@@ -1,3 +1,4 @@
 <h1>Edit Album</h1>
 
+<%= render 'shared/errors' %>
 <%= render 'album_form', action: albums_url, album: @album, bands: Band.all %>

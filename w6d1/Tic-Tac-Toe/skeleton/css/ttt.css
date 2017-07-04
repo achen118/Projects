@@ -1,0 +1,30 @@
+ul {
+  width: 300px;
+}
+
+li {
+  float: left;
+  width: 100px;
+  height: 100px;
+  outline: 5px solid black;
+  background-color: gray;
+  list-style: none;
+  font-size: 99px;
+  text-align: center;
+}
+
+li:hover {
+  background-color: yellow;
+}
+
+.white {
+  background-color: white;
+}
+
+.green {
+  color: green;
+}
+
+.blue {
+  color: blue;
+}

@@ -21,6 +21,15 @@ const APIUtil = {
       dataType: "json",
       data: {query: queryVal}
     });
+  },
+
+  createTweet: data => {
+    return $.ajax({
+      url: '/tweets',
+      method: "POST",
+      dataType: "json",
+      data: data
+    });
   }
 };
 

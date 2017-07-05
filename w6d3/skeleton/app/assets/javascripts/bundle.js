@@ -69,15 +69,17 @@
 
 const FollowToggle = __webpack_require__(1);
 const UsersSearch = __webpack_require__(2);
+const TweetCompose = __webpack_require__(4);
 
 $(() => {
-  const $buttons = $('.follow-toggle');
-  $buttons.each((idx, el) => {
+  $('.follow-toggle').each((idx, el) => {
     new FollowToggle(el, {});
   });
-  const $usersSearches = $('.users-search');
-  $usersSearches.each((idx, el) => {
+  $('.users-search').each((idx, el) => {
     new UsersSearch(el);
+  });
+  $('.tweet-compose').each((idx, el) => {
+    new TweetCompose(el);
   });
 });
 
@@ -211,10 +213,63 @@ const APIUtil = {
       dataType: "json",
       data: {query: queryVal}
     });
+  },
+
+  createTweet: data => {
+    return $.ajax({
+      url: '/tweets',
+      method: "POST",
+      dataType: "json",
+      data: data
+    });
   }
 };
 
 module.exports = APIUtil;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const APIUtil = __webpack_require__(3);
+
+class TweetCompose {
+  constructor() {
+    this.$form = $(".tweet-compose");
+    this.$content = this.$form.find("textarea");
+    this.$mention = this.$form.find("option");
+    this.$charsLeft = this.$form.find(".chars-left");
+    this.$charsLeft.text("140");
+    this.$content.on("input", () => {
+      $(".chars-left").text(140 - this.$content.val().length);
+    });
+    this.$form.on("submit", this.submit.bind(this));
+  }
+
+  submit(event) {
+    event.preventDefault();
+    const $formData = this.$form.serializeJSON();
+    $(":input").attr("disabled", true);
+    APIUtil.createTweet($formData).then(tweet => this.handleSuccess(tweet));
+  }
+
+  clearInput() {
+    this.$content.val("");
+    this.$mention.val("");
+  }
+
+  handleSuccess(tweet) {
+    this.clearInput();
+    $(":input").attr("disabled", false);
+    const $feed = $(this.$form.data("tweets-ul"));
+    tweet = JSON.stringify(tweet);
+    const $tweet = $("<li>").text(tweet);
+    $feed.append($tweet);
+  }
+}
+
+module.exports = TweetCompose;
 
 
 /***/ })

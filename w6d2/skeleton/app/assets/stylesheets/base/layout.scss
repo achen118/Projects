@@ -6,26 +6,38 @@ html {
 }
 
 body {
-	// ...
+	width: 80%;
+	margin: 0 auto;
+	font-family: $serif;
+	font-size: 12px;
 }
 
 button {
-	// background-color:
-	// border-color:
-	// color:
-	// font-weight:
-	// padding:
-	// border-radius:
-	// transition:
-	// font-family:
-	// text-transform:
-	// font-size:
-	// text-align:
+	background-color: $light-blue;
+	border-color: $blue;
+	color: $lightest-gray;
+	font-weight: 700;
+	padding: 7px;
+	border-radius: 3px;
+	transition: all 0.5s ease;
+	font-family: $sans-serif;
+	text-transform: uppercase;
+	font-size: 12px;
+	text-align: center;
 }
 
 button:hover {
-	// background-color:
-	// border-color:
+	background-color: $dark-blue;
+	border-color: $darkest-blue;
+	cursor: pointer;
+}
+
+a:hover {
+	cursor: pointer;
+}
+
+.hidden {
+	visibility: hidden;
 }
 
 /*
@@ -36,6 +48,10 @@ hr {
 	border: 0;
 	height: 1px;
 	background-color: $light-gray;
+}
+
+.language-nav a:hover, .masthead-links a:hover {
+	text-decoration: underline;
 }
 
 .hr-top, .hr-bottom {

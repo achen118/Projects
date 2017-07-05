@@ -245,6 +245,8 @@ class TweetCompose {
       $(".chars-left").text(140 - this.$content.val().length);
     });
     this.$form.on("submit", this.submit.bind(this));
+    this.$form.find(".add-mentioned-user").on("click", this.addMentionedUser.bind(this));
+    this.$form.find(".mentioned-users").on("click", ".remove-mentioned-user", this.removeMentionedUser.bind(this));
   }
 
   submit(event) {
@@ -257,6 +259,7 @@ class TweetCompose {
   clearInput() {
     this.$content.val("");
     this.$mention.val("");
+    this.$form.find(".mentioned-users").empty();
   }
 
   handleSuccess(tweet) {
@@ -266,6 +269,19 @@ class TweetCompose {
     tweet = JSON.stringify(tweet);
     const $tweet = $("<li>").text(tweet);
     $feed.append($tweet);
+  }
+
+  addMentionedUser(event) {
+    event.preventDefault();
+    const $scriptTag = this.$form.find("script").html();
+    this.$form.find(".mentioned-users").append($scriptTag);
+    return false;
+  }
+
+  removeMentionedUser(event) {
+    event.preventDefault();
+    const $parentTarget = $(event.currentTarget).parent();
+    $parentTarget.remove();
   }
 }
 

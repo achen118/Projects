@@ -17,15 +17,22 @@
   </label>
   <br />
 
-  <label>
-    Mention
+<script type="text/template">
+  <div>
     <select name="tweet[mentioned_user_ids][]">
       <option></option>
       <% User.all.each do |user| %>
         <option value="<%= user.id %>"><%= user.username %></option>
       <% end %>
     </select>
-  </label>
+    <a href="#" class="remove-mentioned-user">Remove Mention</a>
+  </div>
+</script>
+<a href="#" class="add-mentioned-user">Add Mention</a>
+<br />
+<div class="mentioned-users">
+
+</div>
   <br>
 
   <input type="Submit" value="Post Tweet!">

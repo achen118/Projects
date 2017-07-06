@@ -7,6 +7,7 @@ class TweetCompose {
     this.$mention = this.$form.find("option");
     this.$charsLeft = this.$form.find(".chars-left");
     this.$charsLeft.text("140");
+    this.$feed = $(this.$form.data("tweets-ul"));
     this.$content.on("input", () => {
       $(".chars-left").text(140 - this.$content.val().length);
     });
@@ -31,10 +32,9 @@ class TweetCompose {
   handleSuccess(tweet) {
     this.clearInput();
     $(":input").attr("disabled", false);
-    const $feed = $(this.$form.data("tweets-ul"));
     tweet = JSON.stringify(tweet);
     const $tweet = $("<li>").text(tweet);
-    $feed.append($tweet);
+    this.$feed.append($tweet);
   }
 
   addMentionedUser(event) {

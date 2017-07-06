@@ -70,6 +70,7 @@
 const FollowToggle = __webpack_require__(1);
 const UsersSearch = __webpack_require__(2);
 const TweetCompose = __webpack_require__(4);
+const InfiniteTweets = __webpack_require__(5);
 
 $(() => {
   $('.follow-toggle').each((idx, el) => {
@@ -80,6 +81,9 @@ $(() => {
   });
   $('.tweet-compose').each((idx, el) => {
     new TweetCompose(el);
+  });
+  $('.infinite-tweets').each((idx, el) => {
+    new InfiniteTweets(el);
   });
 });
 
@@ -222,6 +226,14 @@ const APIUtil = {
       dataType: "json",
       data: data
     });
+  },
+
+  getTweets: (maxCreatedAt) => {
+    return $.ajax({
+      url: '/feed',
+      dataType: 'json',
+      data: maxCreatedAt ? { max_created_at: maxCreatedAt } : {}
+    });
   }
 };
 
@@ -241,6 +253,7 @@ class TweetCompose {
     this.$mention = this.$form.find("option");
     this.$charsLeft = this.$form.find(".chars-left");
     this.$charsLeft.text("140");
+    this.$feed = $(this.$form.data("tweets-ul"));
     this.$content.on("input", () => {
       $(".chars-left").text(140 - this.$content.val().length);
     });
@@ -265,10 +278,9 @@ class TweetCompose {
   handleSuccess(tweet) {
     this.clearInput();
     $(":input").attr("disabled", false);
-    const $feed = $(this.$form.data("tweets-ul"));
     tweet = JSON.stringify(tweet);
     const $tweet = $("<li>").text(tweet);
-    $feed.append($tweet);
+    this.$feed.append($tweet);
   }
 
   addMentionedUser(event) {
@@ -286,6 +298,42 @@ class TweetCompose {
 }
 
 module.exports = TweetCompose;
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const APIUtil = __webpack_require__(3);
+
+class InfiniteTweets {
+  constructor() {
+    this.maxCreatedAt = null;
+    this.$feed = $(".infinite-tweets");
+    this.fetchTweets();
+    $(".fetch-more").on("click", this.fetchTweets.bind(this));
+  }
+
+  fetchTweets(event) {
+    APIUtil.getTweets(this.maxCreatedAt).then(tweets => this.insertTweets(tweets));
+    return false;
+  }
+
+  insertTweets(tweets) {
+    this.maxCreatedAt = tweets.slice(-1)[0].created_at;
+    tweets.forEach(el => {
+      const $tweet = $("<li>").text(JSON.stringify($(el)));
+      this.$feed.append($tweet);
+    });
+    if (tweets.length < 20) {
+      $(".fetch-more").remove();
+      const $noMoreTweets = $("<strong>").text("No more tweets to fetch");
+      this.$feed.append($noMoreTweets);
+    }
+  }
+}
+
+module.exports = InfiniteTweets;
 
 
 /***/ })

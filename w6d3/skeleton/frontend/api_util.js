@@ -30,6 +30,14 @@ const APIUtil = {
       dataType: "json",
       data: data
     });
+  },
+
+  getTweets: (maxCreatedAt) => {
+    return $.ajax({
+      url: '/feed',
+      dataType: 'json',
+      data: maxCreatedAt ? { max_created_at: maxCreatedAt } : {}
+    });
   }
 };
 

@@ -50,10 +50,12 @@ class User < ActiveRecord::Base
       .uniq
 
     # TODO: How can we use limit/max_created_at here??
+    @tweets = @tweets.limit(limit) if limit
+    @tweets = @tweets.where("tweets.created_at < ?", max_created_at) if max_created_at
 
     @tweets
   end
-  
+
   def followed_user_ids
     @followed_user_ids ||= out_follows.pluck(:followee_id)
   end

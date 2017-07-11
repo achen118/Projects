@@ -1,0 +1,57 @@
+html, body, div, h1, ul, li {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  text-decoration: inherit;
+  vertical-align: inherit;
+  box-sizing: inherit;
+  background: transparent;
+}
+
+body {
+  font-family: 'Muli', sans-serif;
+}
+
+h1 {
+  font-weight: 700;
+  font-size: 30px;
+}
+
+li {
+  list-style: none;
+}
+
+.outside-div {
+  width: 40%;
+  margin: 0 auto;
+  height: auto;
+  padding-top: 20px;
+}
+
+.clock {
+  border: 2px solid black;
+  padding: 20px;
+  background: orange;
+  margin-top: 10px;
+}
+
+.clock ul {
+  display: flex;
+  justify-content: space-between;
+  font-size: 30px;
+  color: white;
+}
+
+.weather {
+  width: 100px;
+  margin: 0 auto;
+}
+
+.weathertitle {
+  text-align: center;
+  margin: 10px;
+}
